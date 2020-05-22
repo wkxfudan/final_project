@@ -226,7 +226,7 @@ void Game::ChessBoard::movedown(int i, int j)
 
 void Game::ChessBoard::moveup(int i, int j)
 {
-	bool combinflag=false;
+	bool combinflag;
 	if (board[i][j] == NULL)
 		return;
 	if (j == 0)
