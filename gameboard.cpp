@@ -24,7 +24,6 @@ bool Game::ChessBoard::checkwin() const
 			if (board[i][j]!=NULL)
 				if(board[i][j]->getvalue()==2048)
 				{
-					std::cout << "game win" << std::endl;
 					return true;
 				}
 	return false;
@@ -35,7 +34,6 @@ bool Game::ChessBoard::checklose() const
 	if (full())
 		if (!movePossible())
 		{
-			std::cout << "gamefailed" << std::endl;
 			return true;
 		}
 	return false;
@@ -118,8 +116,6 @@ void Game::ChessBoard::move(Direction dir)
 		tile* newtile = new tile((rand() % 2 + 1) * 2);
 		board[freepos.first][freepos.second] = newtile;
 	}
-	checkwin();
-	checklose();
 }
 
 void Game::ChessBoard::print() const
@@ -147,12 +143,16 @@ bool Game::ChessBoard::full() const
 std::pair<int, int> Game::ChessBoard::freeposition() const
 {
 	std::pair<int, int> pos;
+	std::vector<std::pair<int, int>> emptypos;
 	srand((int)time(0));
-	do
-	{
-		pos.first = rand() % dimension;
-		pos.second = rand() % dimension;
-	} while (board[pos.first][pos.second] != NULL);
+	for(int i=0;i<dimension;i++)
+		for (int j = 0; j < dimension; j++)
+		{
+			if (board[i][j] == NULL)
+				emptypos.push_back(std::pair<int,int>(i,j));
+		}
+	int num = emptypos.size();
+	pos = emptypos[rand() % num];
 	return pos;
 }
 
@@ -226,7 +226,7 @@ void Game::ChessBoard::movedown(int i, int j)
 
 void Game::ChessBoard::moveup(int i, int j)
 {
-	bool combinflag;
+	bool combinflag = false;
 	if (board[i][j] == NULL)
 		return;
 	if (j == 0)
