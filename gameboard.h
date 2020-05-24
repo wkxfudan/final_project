@@ -32,8 +32,7 @@ namespace Game {
 		bool full() const;
 		bool movePossible() const;
 
-		bool checkwin() const;
-		bool checklose() const;
+
 
 	public:
 		ChessBoard(int dim);
@@ -49,6 +48,9 @@ namespace Game {
 		void move(Direction dir);
 		void print() const;
 		bool lastcollisionflag() const { return collisionflag; };//合并是否发生
+
+		bool checkwin() const;
+		bool checklose() const;
 
 	};
 
